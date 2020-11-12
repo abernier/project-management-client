@@ -7,18 +7,16 @@ import { Link } from 'react-router-dom';
 import AddProject from './AddProject'; // <== !!!
 
 class ProjectList extends Component {
-  constructor(){
-      super();
-      this.state = { listOfProjects: [] };
-  }
+  state = { listOfProjects: [] }
 
   getAllProjects = () =>{
     axios.get(`http://localhost:5000/api/projects`)
-    .then(responseFromApi => {
-      this.setState({
-        listOfProjects: responseFromApi.data
+      .then(responseFromApi => {
+        this.setState({
+          listOfProjects: responseFromApi.data
+        })
       })
-    })
+      .catch(err => console.log('Error while fetching projects', err))
   }
 
   componentDidMount() {

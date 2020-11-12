@@ -4,12 +4,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class EditProject extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        title: this.props.theProject.title, 
-        description: this.props.theProject.description
-    }
+  state = {
+    title: this.props.theProject.title, 
+    description: this.props.theProject.description
   }
 
     
@@ -20,12 +17,12 @@ class EditProject extends Component {
     event.preventDefault();
 
     axios.put(`http://localhost:5000/api/projects/${this.props.theProject._id}`, { title, description })
-    .then( () => {
+      .then( () => {
         this.props.getTheProject();
         // after submitting the form, redirect to '/projects'
         this.props.history.push('/projects');    
-    })
-    .catch( error => console.log(error) )
+      })
+      .catch( error => console.log(error) )
   }
 
   handleChangeTitle = (event) => {  

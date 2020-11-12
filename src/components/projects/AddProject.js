@@ -5,26 +5,23 @@ import axios from 'axios';
 
 
 class AddProject extends Component {
-  constructor(props){
-      super(props);
-      this.state = { title: "", description: "" };
-  }
+  state = { title: "", description: "" }
    
   handleFormSubmit = (event) => {
     event.preventDefault();
     const title = this.state.title;
     const description = this.state.description;
     axios.post("http://localhost:5000/api/projects", { title, description })
-    .then( () => {
+      .then( () => {
         this.props.getData();
         this.setState({title: "", description: ""});
-    })
-    .catch( error => console.log(error) )
+      })
+      .catch( error => console.log(error) )
   }
 
   handleChange = (event) => {  
-      const {name, value} = event.target;
-      this.setState({[name]: value});
+    const {name, value} = event.target;
+    this.setState({[name]: value});
   }
 
   render(){

@@ -8,27 +8,24 @@ import EditProject from './EditProject.js'
 import AddTask from '../tasks/AddTask';
 
 class ProjectDetails extends Component {
-  constructor(props){
-      super(props);
-      this.state = {};
-  }
+  state = {}
 
   // 👨‍🏫
   componentDidMount(){
-      this.getSingleProject();
+    this.getSingleProject();
   }
 
   // 👨‍🏫
   getSingleProject = () => {
       const { params } = this.props.match;
       axios.get(`http://localhost:5000/api/projects/${params.id}`)
-      .then( responseFromApi =>{
+        .then( responseFromApi =>{
           const theProject = responseFromApi.data;
           this.setState(theProject);
-      })
-      .catch((err)=>{
-          console.log(err)
-      })
+        })
+        .catch((err)=>{
+          console.log('Error while fetching project', err)
+        })
   }
 
   // 👨‍🏫
@@ -48,12 +45,12 @@ class ProjectDetails extends Component {
   deleteProject = () => {
     const { params } = this.props.match;
     axios.delete(`http://localhost:5000/api/projects/${params.id}`)
-    .then( () =>{
-        this.props.history.push('/projects'); // !!!         
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+      .then(() =>{
+          this.props.history.push('/projects'); // !!!         
+      })
+      .catch((err) => {
+          console.log('Error while deleting project', err)
+      })
   }
 
   renderAddTaskForm = () => {
@@ -76,14 +73,14 @@ class ProjectDetails extends Component {
         { this.state.tasks && this.state.tasks.length > 0 && <h3>Tasks </h3> }
         {/* map through the array of tasks and... */}
         { this.state.tasks && this.state.tasks.map((task, index) => {
-            return(
-                <div key={ index }>
-                {/* ... make each task's title a link that goes to the task details page */}
-                    <Link to={`/projects/${this.state._id}/tasks/${task._id}`}> 
-                        { task.title }
-                    </Link>
-                </div>
-            )
+          return(
+            <div key={task._id}>
+              {/* ... make each task's title a link that goes to the task details page */}
+              <Link to={`/projects/${this.state._id}/tasks/${task._id}`}> 
+                {task.title}
+              </Link>
+            </div>
+          )
             
         }) }
 
